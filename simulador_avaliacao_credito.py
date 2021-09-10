@@ -33,12 +33,15 @@ def avaliar_mau_pagador(dict_respostas):
 
 st.image('img/bytebank_logo.png')
 st.write('# Simulador de Avaliação de Crédito')
+st.write('## Passo 2 de 2')
+st.write('### Com tecnologia de última geração e uma metodologia própria de avaliação com uso de inteligência artificial, a Bytebank oferece uma solução simples, rápida e econômica, que prioriza a experiência de nossos clientes e permite que cada vez mais pessoas possam fazer um empréstimo pessoal seguro, com mais conveniência e menos burocracia.')
+st.write('Preencha o formulário abaixo e descubra na hora se o seu crédito foi aprovado.')
 
-expander_trabalho = st.beta_expander('Trabalho e Escolaridade')
+expander_trabalho = st.expander('Trabalho e Escolaridade')
 
-expander_pessoal = st.beta_expander('Pessoal')
+expander_pessoal = st.expander('Pessoal')
 
-expander_familia = st.beta_expander('Família')
+expander_familia = st.expander('Família')
 
 
 dict_respostas = {}
@@ -46,7 +49,7 @@ lista_campos = load('objetos/25Ago2021_lista_campos.joblib')
 lista_features = load('objetos/25Ago2021_features.joblib')
 
 with expander_trabalho:
-    col1_form, col2_form = st.beta_columns(2)
+    col1_form, col2_form = st.columns(2)
 
     dict_respostas['Categoria_de_renda'] = col1_form.selectbox('Qual a sua categoria de renda?', lista_campos['Categoria_de_renda'])
     
@@ -72,7 +75,7 @@ with expander_trabalho:
 
 
 with expander_pessoal:
-    col1_form, col2_form = st.beta_columns(2)
+    col1_form, col2_form = st.columns(2)
 
     dict_respostas['Idade'] = col1_form.number_input('Qual a sua idade? (Apenas maiores de 18 anos)', min_value = 18, max_value=90, step=1)
     dict_respostas['Tem_telefone_fixo'] = 1 if col1_form.radio('Você possui telefone fixo?', ['Sim', 'Não']) == 'Sim' else 0
@@ -83,7 +86,7 @@ with expander_pessoal:
     dict_respostas['Tem_email'] = 1 if col2_form.radio('Você possui e-mail?', ['Sim', 'Não']) == 'Sim' else 0
 
 with expander_familia:
-    col1_form, col2_form = st.beta_columns(2)
+    col1_form, col2_form = st.columns(2)
     dict_respostas['Estado_Civil'] = col1_form.selectbox('Qual é o seu estado civil?', lista_campos['Estado_Civil'])
     dict_respostas['Qtd_Filhos'] = col1_form.number_input('Quantos filhos você tem?', min_value = 0, max_value=20, step=1)
     dict_respostas['Tamanho_Familia'] = col2_form.number_input('Qual o tamanho da sua família?', min_value = 1, max_value=20, step=1)
