@@ -8,12 +8,15 @@ from utils import Transformador
 #Cor de fundo do listbox
 st.markdown('<style>div[role="listbox"] ul{background-color: #eee1f79e};</style>', unsafe_allow_html=True)
 
+#Cor de fundo dos botões
+st.markdown('<style>div.stButton > button:first-child {background-color: #eee1f79e; color:#ffffff;}, div.stButton > button:hover {background-color: #3AC93A;color:#ffffff;};</style>', unsafe_allow_html=True)
+
 def avaliar_mau_pagador(dict_respostas):
     modelo = load('objetos/25Ago2021_pipeline_rf.joblib')
     features = load('objetos/25Ago2021_features.joblib')
 
     # Transforma os valores de Anos_desempregado em negativo e o designa para Anos_empregado
-    if dict_respostas['Anos_desempregado'] > 0:
+    if dict_respostas['Anos_desempregado'] >= 0:
         dict_respostas['Anos_empregado'] = dict_respostas['Anos_desempregado'] * -1
 
     respostas = [] # Cria uma lista que conterá as respostas dos clientes
@@ -30,12 +33,33 @@ def avaliar_mau_pagador(dict_respostas):
 
     return mau_pagador
 
-
+# Cabeçalho da página
 st.image('img/bytebank_logo.png')
-st.write('# Simulador de Avaliação de Crédito')
-st.write('## Passo 2 de 2')
-st.write('### Com tecnologia de última geração e uma metodologia própria de avaliação com uso de inteligência artificial, a Bytebank oferece uma solução simples, rápida e econômica, que prioriza a experiência de nossos clientes e permite que cada vez mais pessoas possam fazer um empréstimo pessoal seguro, com mais conveniência e menos burocracia.')
-st.write('Preencha o formulário abaixo e descubra na hora se o seu crédito foi aprovado.')
+
+# Título e subtítulos do app
+'''
+# **Simulador de Avaliação de Crédito**
+
+### Com tecnologia de última geração e uma metodologia própria de avaliação com uso de inteligência artificial, a Bytebank oferece uma solução simples, rápida e econômica, que prioriza a experiência de nossos clientes e permite que cada vez mais pessoas possam fazer um empréstimo pessoal seguro, com mais conveniência e menos burocracia.
+
+Preencha o formulário abaixo e descubra na hora se o seu crédito foi aprovado.
+'''
+
+# Coloca botões com valores de empréstimo
+st.write('Escolha o valor do empréstimo')
+
+col1_button, col2_button, col3_button = st.columns(3)
+
+col1_button.button('R$ 3.000')
+col1_button.button('R$ 5.000')
+col2_button.button('R$ 10.000')
+col2_button.button('R$ 20.000')
+col3_button.button('R$ 30.000')
+if col3_button.button('Outro valor'):
+    title = col1_button.text_input('Qual o valor?', 'R$ ', help='Digite o valor que você precisa')
+    col1_button.button('Continue')
+    
+
 
 expander_trabalho = st.expander('Trabalho e Escolaridade')
 
@@ -59,7 +83,7 @@ with expander_trabalho:
     # original está em anual, mas foi adaptado pro Brasil como salário 
     # mensal. Por isso o * 12 no final. Também foi estipulado os limites do salário, de forma excluir os outliers, entre 0 e 35 mil, 
     # e a graduação é de 500 em 500 reais
-    dict_respostas['Rendimento_Anual'] = col1_form.slider('Qual o seu salário?', min_value = 0, max_value = 35000, step = 500) * 12
+    dict_respostas['Rendimento_Anual'] = col1_form.slider('Qual o seu salário?', help='Você pode usar as teclas do teclado para para alterar os valores', min_value = 0, max_value = 35000, step = 500) * 12
     
     dict_respostas['Tem_telefone_trabalho'] = 1 if col2_form.selectbox('Tem telefone do trabalho?', ['Sim', 'Não']) == 'Sim' else 0
     
@@ -98,3 +122,4 @@ if st.button('Avaliar crédito'):
 
     else:
         st.success('Crédito Aprovado')
+        st.balloons()
