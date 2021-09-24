@@ -45,25 +45,29 @@ st.image('img/bytebank_logo.png')
 Preencha o formulário abaixo e descubra na hora se o seu crédito foi aprovado.
 '''
 
-# Coloca botões com valores de empréstimo
-st.write('Escolha o valor do empréstimo')
-
-valor = st.radio(
-        'Opções',
-      ('R$ 3.000', 'R$ 5.000', 'R$ 10.000', 'R$ 20.000', 'R$ 30.000', 'R$ 50.000', 'Outro valor'))
-
-st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-if valor == 'Outro valor':
-    st.text_input('Escolha outro valor', 'R$ ', help='Digite o valor que você precisa')
-    
-
+expander_emprestimo = st.expander('Empréstimo')
 
 expander_trabalho = st.expander('Trabalho e Escolaridade')
 
 expander_pessoal = st.expander('Pessoal')
 
 expander_familia = st.expander('Família')
+
+
+# Coloca botões com valores de empréstimo
+
+with expander_emprestimo:
+    st.write('Escolha o valor do empréstimo')
+
+    valor = st.radio(
+         'Opções',
+       ('R$ 3.000', 'R$ 5.000', 'R$ 10.000', 'R$ 20.000', 'R$ 30.000', 'R$ 50.000', 'Outro valor'))
+
+    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+
+    if valor == 'Outro valor':
+        st.text_input('Escolha outro valor', 'R$ ', help='Digite o valor que você precisa')
+    
 
 
 dict_respostas = {}
