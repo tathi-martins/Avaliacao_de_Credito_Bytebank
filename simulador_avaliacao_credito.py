@@ -16,7 +16,7 @@ def avaliar_mau_pagador(dict_respostas):
     features = load('objetos/25Ago2021_features.joblib')
 
     # Transforma os valores de Anos_desempregado em negativo e o designa para Anos_empregado
-    if dict_respostas['Anos_desempregado'] >= 0:
+    if dict_respostas['Anos_desempregado'] > 0:
         dict_respostas['Anos_empregado'] = dict_respostas['Anos_desempregado'] * -1
 
     respostas = [] # Cria uma lista que conterá as respostas dos clientes
@@ -48,16 +48,15 @@ Preencha o formulário abaixo e descubra na hora se o seu crédito foi aprovado.
 # Coloca botões com valores de empréstimo
 st.write('Escolha o valor do empréstimo')
 
-col1_button, col2_button, col3_button = st.columns(3)
+valor = st.radio(
+        'Opções',
+      ('R$ 3.000', 'R$ 5.000', 'R$ 10.000', 'R$ 20.000', 'R$ 30.000', 'R$ 50.000', 'Outro valor'))
 
-col1_button.button('R$ 3.000')
-col1_button.button('R$ 5.000')
-col2_button.button('R$ 10.000')
-col2_button.button('R$ 20.000')
-col3_button.button('R$ 30.000')
-if col3_button.button('Outro valor'):
-    title = col1_button.text_input('Qual o valor?', 'R$ ', help='Digite o valor que você precisa')
-    col1_button.button('Continue')
+st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+
+if valor == 'Outro valor':
+    #emprestimo = col1_button.text_input('Qual o valor?', 'R$ ', help='Digite o valor que você precisa')
+    st.text_input('Escolha outro valor', 'R$ ', help='Digite o valor que você precisa')
     
 
 
@@ -91,7 +90,7 @@ with expander_trabalho:
     
     dict_respostas['Anos_desempregado'] = 0
     if col2_form.radio('Você está desempregado?', ['Sim', 'Não']) == 'Sim':
-        dict_respostas['Anos_desempregado'] = col2_form.number_input('Há quantos anos você está desempregado?', help='Preencha 0 se você estiver desempregado à menos de um ano', max_value=50, step=1)
+        dict_respostas['Anos_desempregado'] = col2_form.number_input('Há quantos anos você está desempregado?', help='Selecione 1 se você estiver desempregado à um ano ou menos', min_value = 1, max_value=50, step=1)
 
     else:
         dict_respostas['Anos_empregado'] = col2_form.number_input('Há quantos anos você está empregado?', help='Você pode usar as teclas do teclado para para alterar os valores', max_value=50, step=1)
