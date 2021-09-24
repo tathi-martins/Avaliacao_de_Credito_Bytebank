@@ -55,7 +55,6 @@ valor = st.radio(
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 if valor == 'Outro valor':
-    #emprestimo = col1_button.text_input('Qual o valor?', 'R$ ', help='Digite o valor que você precisa')
     st.text_input('Escolha outro valor', 'R$ ', help='Digite o valor que você precisa')
     
 
