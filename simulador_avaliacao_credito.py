@@ -3,7 +3,7 @@ import streamlit as st
 from joblib import load
 import pandas as pd
 from utils import Transformador
-# Pressione Ctrl + C para liberar o terminal de volta ao ambiente venv (sair do streamlit hello)
+
 
 #Cor de fundo do listbox
 st.markdown('<style>div[role="listbox"] ul{background-color: #eee1f79e};</style>', unsafe_allow_html=True)
