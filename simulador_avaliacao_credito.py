@@ -45,13 +45,13 @@ st.image('img/bytebank_logo.png')
 Preencha o formulário abaixo e descubra na hora se o seu crédito foi aprovado.
 '''
 
-expander_emprestimo = st.expander('Empréstimo')
+expander_emprestimo = st.beta_expander('Empréstimo')
 
-expander_trabalho = st.expander('Trabalho e Escolaridade')
+expander_trabalho = st.beta_expander('Trabalho e Escolaridade')
 
-expander_pessoal = st.expander('Pessoal')
+expander_pessoal = st.beta_expander('Pessoal')
 
-expander_familia = st.expander('Família')
+expander_familia = st.beta_expander('Família')
 
 
 # Coloca botões com valores de empréstimo
